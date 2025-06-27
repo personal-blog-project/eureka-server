@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 타임존 한국시간 -->
+    <timestamp key="bySecond" datePattern="yyyy-MM-dd HH:mm:ss" timeZone="Asia/Seoul" />
+
+    <!-- 로그 파일 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/app/logs/eureka-server.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/app/logs/eureka-server.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <!-- JSON 로그 encoder -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <timeZone>Asia/Seoul</timeZone>
+        </encoder>
+    </appender>
+
+    <!-- 콘솔 출력도 JSON -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <timeZone>Asia/Seoul</timeZone>
+        </encoder>
+    </appender>
+
+    <!-- 루트 로그 설정 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>
