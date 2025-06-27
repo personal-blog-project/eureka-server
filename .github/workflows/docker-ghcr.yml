@@ -4,6 +4,10 @@ on:
   push:
     branches: [ "main" ]
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-deploy:
     uses: personal-blog-project/infra-docker-compose/.github/workflows/service-ci-template.yml@main
