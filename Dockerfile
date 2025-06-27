@@ -1,9 +1,10 @@
+FROM maven:3.9.5-eclipse-temurin-21 AS builder
+WORKDIR /build
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+
 FROM eclipse-temurin:21-jdk
 WORKDIR /app
-COPY target/eureka-server-*.jar app.jar
-
-# 굳이 EXPOSE 생략하거나,
-# 또는 참고용으로만 작성 가능 (실제 포트는 app.properties나 환경변수로 제어)
-EXPOSE 8761
-
+COPY --from=builder /build/target/eureka-server-*.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
